@@ -3,11 +3,17 @@ import React from "react";
 const Cart = ({ addedProduct }) => {
   let price = 0;
   let shopingCharge = 0;
+  let quantity = 0;
 
   for (let items of addedProduct) {
-    price += items.price;
+    items.quantity = items.quantity || 1;
+
+    price += items.price * items.quantity;
+
     shopingCharge += items.shipping;
+    quantity += items.quantity;
   }
+
   const tax = price * 0.1;
   const grandTotal = price + shopingCharge + tax;
 
@@ -17,7 +23,7 @@ const Cart = ({ addedProduct }) => {
         <h2 className="text-center font-semibold text-xl ">Order Summary</h2>
       </div>
       <div className="shopitemsDetails">
-        <p>Selected Items: {addedProduct.length}</p>
+        <p>Selected Items: {quantity}</p>
         <p>Total Price: ${price}</p>
         <p>Total Shipping Charge: ${shopingCharge}</p>
         <p>Tax: ${tax.toFixed(2)}</p>
