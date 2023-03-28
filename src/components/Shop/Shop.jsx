@@ -20,8 +20,19 @@ const Shop = () => {
 
   useEffect(() => {
     const loadedCart = getCart();
-    console.log(loadedCart);
-  }, []);
+    let finalProduct = [];
+    for (let id in loadedCart) {
+      const addedProduct = products.find((item) => {
+        return id === item.id;
+      });
+      if (addedProduct) {
+        addedProduct.quantity = loadedCart[id];
+        finalProduct.push(addedProduct);
+      }
+    }
+
+    setAddedProduct(finalProduct);
+  }, [products]);
 
   return (
     <section id="shop">
