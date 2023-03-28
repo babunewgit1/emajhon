@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cart from "../Cart/Cart";
 import Product from "../Product/Product";
+import { addToDb, getCart } from "../Utlities/Utlies";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
@@ -8,12 +9,18 @@ const Shop = () => {
 
   const addToCart = (product) => {
     setAddedProduct([...addedProduct, product]);
+    addToDb(product.id);
   };
 
   useEffect(() => {
     fetch("products.json")
       .then((res) => res.json())
       .then((req) => setProducts(req));
+  }, []);
+
+  useEffect(() => {
+    const loadedCart = getCart();
+    console.log(loadedCart);
   }, []);
 
   return (
